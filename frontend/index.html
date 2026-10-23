@@ -3,182 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aerarium — Sovereign Spend & Runway Treasury</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Aerarium — Sovereign Spend & Runway Treasury Ledger</title>
+  <link rel="stylesheet" href="css/landing.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-grid">
+<body>
 
-  <div class="app-shell">
+  <!-- Navigation -->
+  <header class="landing-nav">
+    <a href="/" class="brand-badge">
+      <span class="gold-gem"></span>
+      Aerarium
+    </a>
+    <nav class="nav-links">
+      <a href="#simulator" class="nav-link-item">Runway Simulator</a>
+      <a href="#problem" class="nav-link-item">The Leak Problem</a>
+      <a href="/login" class="btn-subtle">Sign In</a>
+      <a href="/login" class="btn-gold">
+        Launch Console
+        <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+      </a>
+    </nav>
+  </header>
 
-    <!-- Floating Island 1: Sidebar -->
-    <aside class="sidebar-island">
-      <div class="brand-header">
-        <h1 class="brand-title">
-          <span class="brand-dot"></span>
-          Aerarium
-        </h1>
-        <p class="brand-subtitle">Sovereign Spend & Runway Treasury</p>
+  <!-- Hero Section -->
+  <main class="hero-container">
+    <div class="pill-tag">
+      <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
+      Sovereign Capital & Runway Protection
+    </div>
+
+    <h1 class="hero-heading">
+      Where is your startup's cash runway leaking?
+    </h1>
+
+    <p class="hero-sub">
+      Aerarium audits recurring cloud contracts, detects dormant seat licenses, and flags price creep. Reclaim up to 28% of your software burn and extend your survival runway by months.
+    </p>
+
+    <div class="hero-actions">
+      <a href="/login" class="btn-gold" style="padding: 0.85rem 2rem; font-size: 1rem;">
+        Open Working Demo
+        <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+      </a>
+      <a href="#simulator" class="btn-subtle" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
+        Runway Simulator Below
+      </a>
+    </div>
+
+    <!-- Live Interactive Runway Simulator Component in Hero -->
+    <div id="simulator" class="calculator-sandbox">
+      <div class="calc-header">
+        <div>
+          <span style="font-weight: 700; color: white; font-size: 1.05rem;">Live Runway Extension Engine</span>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">Slide your current bank balance to see the effect of automated license reclamation.</p>
+        </div>
+        <span style="font-size: 0.75rem; color: #10B981; font-family: var(--font-mono); font-weight: 700;">AUDIT ENGINE: ONLINE</span>
       </div>
 
-      <nav class="nav-list">
-        <button class="nav-link active" data-tab="dashboard">
-          <i data-lucide="layout-dashboard"></i>
-          Overview
-        </button>
-        <button class="nav-link" data-tab="subscriptions">
-          <i data-lucide="credit-card"></i>
-          Subscriptions
-        </button>
-        <button class="nav-link" data-tab="leaks">
-          <i data-lucide="sparkles"></i>
-          Leak Detector
-        </button>
-        <button class="nav-link" data-tab="runway">
+      <div class="calc-grid">
+        <div class="calc-box">
+          <div class="calc-label">CASH RESERVES</div>
+          <div id="calc-reserves-val" class="calc-val">$185,000</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Bank cash in hand</div>
+        </div>
+
+        <div class="calc-box">
+          <div class="calc-label">MONTHLY RECURRING SPEND</div>
+          <div class="calc-val" style="color: #F87171;">$5,155/mo</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">8 active enterprise tools</div>
+        </div>
+
+        <div class="calc-box">
+          <div class="calc-label">IDENTIFIED RECLAIMABLE LEAKS</div>
+          <div class="calc-val" style="color: #F59E0B;">$1,115/mo</div>
+          <div style="font-size: 0.75rem; color: #10B981; margin-top: 0.25rem;">+3.4 months runway gained</div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+          <span style="color: var(--text-muted); font-weight: 600;">Simulate Cash Reserves:</span>
+          <span id="slider-val-label" style="color: var(--gold-accent); font-family: var(--font-mono); font-weight: 700;">$185,000</span>
+        </div>
+        <input type="range" id="cash-slider" class="calc-slider" min="50000" max="500000" step="5000" value="185000">
+      </div>
+    </div>
+  </main>
+
+  <!-- Problem & Solution Section -->
+  <section id="problem" class="grid-section">
+    <div style="text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">
+      THE REAL PROBLEM
+    </div>
+    <h2 style="text-align: center; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 3.5rem;">
+      Why Startups Silently Bleed Runway
+    </h2>
+
+    <div class="features-grid">
+      <div class="feature-box">
+        <div class="feature-icon-wrapper">
+          <i data-lucide="user-x"></i>
+        </div>
+        <h3 class="feature-title">Zombie Seats</h3>
+        <p class="feature-desc">
+          Engineers and designers leave or switch projects, but their $45/mo Figma, GitHub, and Notion seats keep auto-billing forever.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon-wrapper">
           <i data-lucide="trending-up"></i>
-          Cashflow Runway
-        </button>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div id="runway-pill" class="runway-badge">
-          <i data-lucide="clock" style="width: 14px; height: 14px;"></i>
-          <span id="runway-text">18.8 Mo Runway</span>
         </div>
-      </div>
-    </aside>
-
-    <!-- Floating Island 2: Main Canvas -->
-    <main class="main-island">
-
-      <header class="view-header">
-        <div>
-          <h2 class="view-title">Subscription & Capital Treasury</h2>
-          <p class="view-desc">High-signal SaaS spend tracking, runway projections, and license waste elimination.</p>
-        </div>
-        <div>
-          <button id="toggle-add-sub-btn" class="btn-primary">
-            <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
-            Add Subscription
-          </button>
-        </div>
-      </header>
-
-      <!-- Inline Drawer for Adding Subscription (Zero Popups) -->
-      <div id="add-sub-drawer" class="inline-drawer" style="border-radius: 20px; margin-top: 1rem;">
-        <form id="add-sub-form" class="inline-form">
-          <div class="form-group">
-            <label>Tool / Subscription</label>
-            <input type="text" id="sub-name" class="form-control" placeholder="e.g. Linear Enterprise" required>
-          </div>
-          <div class="form-group">
-            <label>Vendor</label>
-            <input type="text" id="sub-vendor" class="form-control" placeholder="e.g. Linear Orbit Inc" required>
-          </div>
-          <div class="form-group">
-            <label>Monthly Cost ($)</label>
-            <input type="number" step="0.01" id="sub-cost" class="form-control" placeholder="120.00" required>
-          </div>
-          <div class="form-group">
-            <label>Category</label>
-            <select id="sub-category" class="form-control">
-              <option value="cloud">Cloud & Infra</option>
-              <option value="ai">AI & APIs</option>
-              <option value="dev_tools">Dev Tools</option>
-              <option value="design">Design & UI</option>
-              <option value="productivity">Productivity</option>
-            </select>
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button type="submit" class="btn-primary">Save Tool</button>
-            <button type="button" id="cancel-add-sub-btn" class="btn-quiet">Cancel</button>
-          </div>
-        </form>
+        <h3 class="feature-title">Silent Price Creep</h3>
+        <p class="feature-desc">
+          Cloud vendors increase tiers automatically after introductory periods. Datadog or AWS bills jump 35% without an alert until the credit card statement closes.
+        </p>
       </div>
 
-      <!-- KPI Cards -->
-      <div class="metrics-grid">
-        <div class="section-card">
-          <div class="metric-label">
-            <span>MONTHLY RECURRING</span>
-            <i data-lucide="dollar-sign" style="width: 16px; height: 16px;"></i>
-          </div>
-          <div id="metric-monthly" class="metric-value">$0.00</div>
-          <div class="metric-sub" id="metric-annualized">$0/yr run-rate</div>
+      <div class="feature-box">
+        <div class="feature-icon-wrapper">
+          <i data-lucide="clock"></i>
         </div>
-
-        <div class="section-card">
-          <div class="metric-label">
-            <span>RUNWAY BUFFER</span>
-            <i data-lucide="shield" style="width: 16px; height: 16px;"></i>
-          </div>
-          <div id="metric-runway" class="metric-value">-- Mo</div>
-          <div class="metric-sub" id="metric-reserves">$165k in reserves</div>
-        </div>
-
-        <div class="section-card">
-          <div class="metric-label">
-            <span>DETECTED SPEND LEAKS</span>
-            <i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i>
-          </div>
-          <div id="metric-leaks" class="metric-value">$0.00</div>
-          <div class="metric-sub" id="metric-leaks-count">0 dormant items</div>
-        </div>
-
-        <div class="section-card">
-          <div class="metric-label">
-            <span>ACTIVE SERVICES</span>
-            <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
-          </div>
-          <div id="metric-tools-count" class="metric-value">0</div>
-          <div class="metric-sub">Across 5 departments</div>
-        </div>
+        <h3 class="feature-title">Every Dollar Is Runway</h3>
+        <p class="feature-desc">
+          $1,500/mo in eliminated software waste equals $18,000/yr. In a seed-stage company, that is an extra month of engineering payroll before fundraising.
+        </p>
       </div>
+    </div>
+  </section>
 
-      <!-- Detected Leaks Card -->
-      <div id="leaks-card-wrapper" class="leak-alert-card">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <i data-lucide="sparkles" style="color: #D97706; width: 18px; height: 18px;"></i>
-            <span style="font-weight: 700; color: #92400E; font-size: 0.95rem;">Treasury Waste & Leak Intelligence</span>
-          </div>
-          <span style="font-size: 0.75rem; color: #B45309; font-weight: 600;">Immediate Savings Opportunities</span>
-        </div>
-        <div id="leaks-list-container">
-          <!-- Populated dynamically -->
-        </div>
-      </div>
+  <!-- CTA Box -->
+  <section style="background: linear-gradient(180deg, rgba(18, 24, 38, 0.9) 0%, rgba(9, 13, 22, 0.9) 100%); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 28px; padding: 4rem 2rem; text-align: center; max-width: 900px; margin: 4rem auto 6rem auto;">
+    <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem;">Take Control of Your Sovereign Runway</h2>
+    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem auto;">
+      Test the working Aerarium console with real-time runway mathematics, leak resolution, and audit exports.
+    </p>
+    <a href="/login" class="btn-gold" style="padding: 0.9rem 2.25rem; font-size: 1rem;">
+      Sign In & Launch Demo
+      <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+    </a>
+  </section>
 
-      <!-- Subscriptions Ledger Table -->
-      <div class="table-card">
-        <div class="table-header-bar">
-          <span style="font-weight: 600; font-size: 1rem; color: var(--primary);">Active Subscriptions</span>
-          <span id="sub-filter-pill" class="pill-active" style="cursor: default;">All Tools</span>
-        </div>
+  <script>
+    lucide.createIcons();
 
-        <table class="clean-table">
-          <thead>
-            <tr>
-              <th>Tool & Vendor</th>
-              <th>Category</th>
-              <th>Monthly Spend</th>
-              <th>Usage Health</th>
-              <th>Next Renewal</th>
-              <th style="text-align: right;">Status</th>
-            </tr>
-          </thead>
-          <tbody id="subscriptions-table-body">
-            <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading subscriptions...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    // Slider simulation
+    const slider = document.getElementById('cash-slider');
+    const label = document.getElementById('slider-val-label');
+    const reservesVal = document.getElementById('calc-reserves-val');
 
-    </main>
-
-  </div>
-
-  <script src="js/app.js"></script>
+    slider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      label.textContent = `$${val.toLocaleString()}`;
+      reservesVal.textContent = `$${val.toLocaleString()}`;
+    });
+  </script>
 </body>
 </html>

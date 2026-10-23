@@ -5,48 +5,59 @@ const db = require('../database/db');
 // GET all subscriptions
 router.get('/', (req, res) => {
   try {
-    const { category, status } = req.query;
-    let query = `
-      SELECT s.*, 
-        (SELECT COUNT(*) FROM spending_leaks l WHERE l.subscription_id = s.id AND l.status = 'active') as active_leaks_count
+    const subs = db.prepare(`
+      SELECT s.*,
+        (SELECT COUNT(*) FROM spending_leaks l WHERE l.subscription_id = s.id AND l.status = 'active') as active_leaks_count,
+        (SELECT potential_savings FROM spending_leaks l WHERE l.subscription_id = s.id AND l.status = 'active' LIMIT 1) as potential_savings,
+        (SELECT reason FROM spending_leaks l WHERE l.subscription_id = s.id AND l.status = 'active' LIMIT 1) as leak_reason
       FROM subscriptions s
-      WHERE 1=1
-    `;
-    const params = [];
+      ORDER BY s.cost DESC
+    `).all();
 
-    if (category) {
-      query += ' AND s.category = ?';
-      params.push(category);
-    }
-    if (status) {
-      query += ' AND s.status = ?';
-      params.push(status);
-    }
-    query += ' ORDER BY s.cost DESC';
-
-    const subscriptions = db.prepare(query).all(...params);
-    res.json({ success: true, count: subscriptions.length, data: subscriptions });
+    res.json({ success: true, count: subs.length, data: subs });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// POST new subscription
+// POST add subscription
 router.post('/', (req, res) => {
   try {
-    const { name, vendor, category = 'cloud', cost, billing_cycle = 'monthly', next_billing_date } = req.body;
-    if (!name || !cost) {
+    const { name, vendor, category = 'cloud', cost, seats_purchased = 1, seats_active = 1 } = req.body;
+    if (!name || isNaN(cost)) {
       return res.status(400).json({ success: false, message: 'Name and cost are required' });
     }
 
-    const billingDate = next_billing_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    const stmt = db.prepare(`
-      INSERT INTO subscriptions (name, vendor, category, cost, billing_cycle, next_billing_date, status, usage_score)
-      VALUES (?, ?, ?, ?, ?, ?, 'active', 90)
-    `);
-    const result = stmt.run(name, vendor || name, category, parseFloat(cost), billing_cycle, billingDate);
-    const created = db.prepare('SELECT * FROM subscriptions WHERE id = ?').get(result.lastInsertRowid);
+    const numCost = parseFloat(cost);
+    const purchased = parseInt(seats_purchased) || 1;
+    const active = Math.min(purchased, parseInt(seats_active) || 1);
+    const usagePct = Math.round((active / purchased) * 100);
 
+    const stmt = db.prepare(`
+      INSERT INTO subscriptions (name, vendor, category, cost, billing_cycle, next_billing_date, status, usage_pct, seats_purchased, seats_active)
+      VALUES (?, ?, ?, ?, 'monthly', date('now', '+30 days'), 'active', ?, ?, ?)
+    `);
+
+    const result = stmt.run(name, vendor || name, category, numCost, usagePct, purchased, active);
+    const subId = result.lastInsertRowid;
+
+    // Automatic diagnostic heuristic: if active seats < 60% of purchased, flag leak!
+    if (purchased > 1 && (active / purchased) < 0.6) {
+      const dormantSeats = purchased - active;
+      const seatCost = numCost / purchased;
+      const savings = Math.round(dormantSeats * seatCost * 100) / 100;
+
+      db.prepare(`
+        INSERT INTO spending_leaks (subscription_id, leak_type, potential_savings, reason, severity)
+        VALUES (?, 'dormant_license', ?, ?, 'high')
+      `).run(
+        subId,
+        savings,
+        `${dormantSeats} out of ${purchased} seats are unassigned/dormant. Immediate reclaim opportunity.`
+      );
+    }
+
+    const created = db.prepare('SELECT * FROM subscriptions WHERE id = ?').get(subId);
     res.status(201).json({ success: true, data: created });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -62,9 +73,14 @@ router.patch('/:id/toggle', (req, res) => {
     }
 
     const newStatus = sub.status === 'active' ? 'paused' : 'active';
-    db.prepare('UPDATE subscriptions SET status = ? WHERE id = ?').run(newStatus, req.params.id);
-    const updated = db.prepare('SELECT * FROM subscriptions WHERE id = ?').get(req.params.id);
+    db.prepare('UPDATE subscriptions SET status = ? WHERE id = ?').run(newStatus, sub.id);
 
+    // If paused, resolve associated leak
+    if (newStatus === 'paused') {
+      db.prepare("UPDATE spending_leaks SET status = 'resolved' WHERE subscription_id = ?").run(sub.id);
+    }
+
+    const updated = db.prepare('SELECT * FROM subscriptions WHERE id = ?').get(sub.id);
     res.json({ success: true, data: updated });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

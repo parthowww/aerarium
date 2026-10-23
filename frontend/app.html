@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aerarium Console — Sovereign Spend & Runway Treasury</title>
+  <link rel="stylesheet" href="css/app.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="app-topbar">
+    <div style="display: flex; align-items: center; gap: 2rem;">
+      <a href="/" class="brand-badge">
+        <span class="gold-gem"></span>
+        Aerarium
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: #F59E0B; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 600;">
+        <span style="width: 6px; height: 6px; background: currentColor; border-radius: 50%;"></span>
+        Treasury Audit Engine: Active
+      </div>
+    </div>
+
+    <div class="user-profile-badge">
+      <div class="user-meta">
+        <div id="user-display-name" class="user-name">Elena Rostova</div>
+        <div id="user-display-company" class="user-role">Helios Robotics & AI • CFO</div>
+      </div>
+      <button id="btn-signout" class="btn-signout">
+        <i data-lucide="log-out" style="width: 14px; height: 14px; vertical-align: middle;"></i>
+        Sign Out
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View -->
+  <main class="app-main">
+
+    <!-- Top Action Banner -->
+    <section class="action-banner">
+      <div>
+        <h1 class="page-title">Sovereign Runway & Subscription Ledger</h1>
+        <p class="page-desc">Mathematical runway calculation, automated license audit, and software waste elimination.</p>
+      </div>
+
+      <div class="banner-controls">
+        <button id="btn-export-audit" class="btn-secondary">
+          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
+          Export Board Audit
+        </button>
+        <button id="btn-toggle-add" class="btn-gold">
+          <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+          Add Subscription
+        </button>
+      </div>
+    </section>
+
+    <!-- Inline Add Drawer -->
+    <div id="add-drawer" class="inline-drawer">
+      <form id="add-tool-form" class="form-grid">
+        <div class="input-box">
+          <label class="input-label">Software / Vendor Name</label>
+          <input type="text" id="tool-name" class="input-control" placeholder="e.g. Snowflake Data Warehouse" required>
+        </div>
+        <div class="input-box">
+          <label class="input-label">Vendor Entity</label>
+          <input type="text" id="tool-vendor" class="input-control" placeholder="Snowflake Inc" required>
+        </div>
+        <div class="input-box">
+          <label class="input-label">Monthly Cost ($)</label>
+          <input type="number" step="0.01" id="tool-cost" class="input-control" placeholder="450.00" required>
+        </div>
+        <div class="input-box">
+          <label class="input-label">Category</label>
+          <select id="tool-category" class="input-control">
+            <option value="cloud">Cloud Infrastructure</option>
+            <option value="ai">AI Models & APIs</option>
+            <option value="dev_tools">Developer Tooling</option>
+            <option value="design">Design & Product</option>
+            <option value="productivity">General Productivity</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <label class="input-label">Purchased vs Active Seats</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="number" id="tool-seats-purchased" class="input-control" placeholder="Total" value="1" style="width: 70px;">
+            <input type="number" id="tool-seats-active" class="input-control" placeholder="Active" value="1" style="width: 70px;">
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="submit" class="btn-gold">Audit & Save</button>
+          <button type="button" id="btn-cancel-add" class="btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Mathematical Runway KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span>SURVIVAL RUNWAY BUFFER</span>
+          <i data-lucide="clock" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div id="kpi-runway-months" class="kpi-value" style="color: #F59E0B;">-- Mo</div>
+        <div id="kpi-runway-days" class="kpi-sub" style="color: #FBBF24;">Calculated from net cashflow</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span>MONTHLY RECURRING SPEND</span>
+          <i data-lucide="dollar-sign" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div id="kpi-monthly-spend" class="kpi-value">$0.00</div>
+        <div id="kpi-annual-runrate" class="kpi-sub" style="color: var(--text-muted);">$0/yr run-rate</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span>CASH IN BANK (RESERVES)</span>
+          <i data-lucide="vault" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div id="kpi-cash-bank" class="kpi-value">$185,000</div>
+        <div class="kpi-sub" style="color: #10B981;">Liquid Treasury Reserves</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span>IDENTIFIED SPEND LEAKS</span>
+          <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div id="kpi-leaks-total" class="kpi-value" style="color: #34D399;">$0.00</div>
+        <div id="kpi-leaks-count" class="kpi-sub" style="color: #10B981;">0 reclaimable waste items</div>
+      </div>
+    </section>
+
+    <!-- Automated Spend Leak Intelligence Panel -->
+    <section id="leak-diagnostic-section" class="leak-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <i data-lucide="sparkles" style="color: #F59E0B; width: 18px; height: 18px;"></i>
+          <span style="font-weight: 700; font-size: 1.05rem; color: #F59E0B;">Active Capital Leaks & Reclaim Opportunities</span>
+        </div>
+        <span style="font-size: 0.75rem; color: #FBBF24; font-family: var(--font-mono); font-weight: 700;">PROACTIVE DIAGNOSTIC</span>
+      </div>
+
+      <div id="leaks-container">
+        <!-- Populated dynamically via app.js -->
+      </div>
+    </section>
+
+    <!-- Subscriptions Ledger Table -->
+    <section class="data-panel">
+      <div class="panel-header">
+        <div class="panel-title">Active SaaS Contracts & Licenses</div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono);">
+          Click status pill to toggle pause & recalculate runway
+        </div>
+      </div>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Tool & Vendor</th>
+            <th>Category</th>
+            <th>Monthly Cost</th>
+            <th>Seat Utilization</th>
+            <th>Next Renewal</th>
+            <th style="text-align: right;">Status Action</th>
+          </tr>
+        </thead>
+        <tbody id="subscriptions-table-body">
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 3rem;">
+              Auditing subscription contracts...
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

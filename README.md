@@ -1,43 +1,44 @@
-# AuraFlow 💫
+# Aerarium 🏛️
 
-> **Minimalist Zero-Noise Subscription & Cashflow Runway Intelligence Ledger**
+> **Sovereign Spend & Runway Treasury Ledger for Tech Startups**
 
-AuraFlow is a modern financial operations ledger built for founders and teams. Designed with the clean, elevated aesthetic of Xenodochy, it cuts through accounting noise with floating frosted-glass cards, automated spending leak detection, and zero intrusive popup dialogs.
+Aerarium is an executive capital preservation engine that audits SaaS contracts, detects dormant seat licenses, and calculates mathematical cash runway extensions in real time.
 
 ---
 
-## ✨ Features
+## ✨ User Flow & Journey
 
-- **Xenodochy Aesthetic:** Off-white canvas (`#F8F9FA`), subtle radial matrix dot grid, floating rounded frosted islands (`rounded-[32px]`), and Bricolage Grotesque typography.
-- **Automated Spend Leak Detection:** Proactively flags unutilized seats, price spikes, and dormant licenses with one-click savings realization.
-- **Zero-Modal Workflow:** Adding subscriptions, toggling active states, and resolving leak alerts happen completely in-line.
-- **Cash Runway Buffer:** Real-time visibility into monthly recurring burn, annualized run-rates, and runway projections.
-- **Native Embedded Database:** Zero-configuration SQLite storage via Node.js native `node:sqlite`.
-- **RESTful API:** Structured endpoints for subscription lifecycle, cashflow summaries, and waste audits.
+1. **Intro / Marketing Landing (`/`)**: High-converting pitch outlining SaaS waste and silent runway depletion. Includes a live interactive Runway Extension Simulator.
+2. **Executive Authentication (`/login`)**: Dedicated corporate sign-in with a pre-configured **1-Click Demo Login** for investor presentations and product walk-throughs.
+3. **Live Treasury Console (`/app`)**: Mathematical runway buffer calculations, proactive license leak detection, one-click savings realization, and exportable board audit reports.
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-aura-flow/
+aerarium/
 ├── backend/
 │   ├── database/
-│   │   ├── schema.sql           # SQLite tables (subscriptions, leaks, snapshots)
+│   │   ├── schema.sql           # SQLite tables (users, subscriptions, spending_leaks, treasury_reserves)
 │   │   ├── db.js                # Database connection using node:sqlite
-│   │   └── seed.js              # Rich SaaS telemetry seed script
+│   │   └── seed.js              # Realistic SaaS audit portfolio seed script
 │   ├── routes/
-│   │   ├── subscriptions.js     # Subscription CRUD & status toggles
-│   │   ├── leaks.js             # Spending leak intelligence & resolution
-│   │   └── cashflow.js          # Runway calculations & category breakdowns
-│   ├── server.js                # Express API & static server
+│   │   ├── auth.js              # Authentication & 1-click demo endpoints
+│   │   ├── treasury.js          # Runway calculations & cash reserves
+│   │   ├── subscriptions.js     # Subscription CRUD, seat audits & toggles
+│   │   └── leaks.js             # Proactive spend leak diagnostics
+│   ├── server.js                # Express API & UI static route server
 │   └── package.json
 ├── frontend/
 │   ├── css/
-│   │   └── style.css            # Xenodochy-style radial grid & glass layout
+│   │   ├── landing.css          # Swiss editorial financial styling
+│   │   └── app.css              # Treasury console styling
 │   ├── js/
-│   │   └── app.js               # Reactive spend controller
-│   └── index.html               # Floating ledger dashboard
+│   │   └── app.js               # Reactive spend controller & audit exporter
+│   ├── index.html               # Marketing landing & runway simulator
+│   ├── login.html               # Corporate auth with 1-click demo
+│   └── app.html                 # Full working treasury console
 └── README.md
 ```
 
@@ -55,27 +56,13 @@ npm install
 ```bash
 npm start
 ```
-The server will seed the database automatically and start on:
-👉 **`http://localhost:4001`**
-
----
-
-## 📡 API Reference
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/subscriptions` | List subscriptions with category & leak flags |
-| `POST` | `/api/subscriptions` | Register a new subscription |
-| `PATCH` | `/api/subscriptions/:id/toggle` | Toggle subscription status (active/paused) |
-| `DELETE` | `/api/subscriptions/:id` | Delete a subscription |
-| `GET` | `/api/leaks` | Fetch active spending leaks & savings |
-| `PATCH` | `/api/leaks/:id/resolve` | Claim savings and resolve a leak |
-| `GET` | `/api/cashflow/summary` | Global monthly spend, reserves & runway |
-| `GET` | `/api/health` | AuraFlow Core health check |
+* **Landing Page:** 👉 `http://localhost:4001/`
+* **Demo Login:** 👉 `http://localhost:4001/login`
+* **Treasury Console:** 👉 `http://localhost:4001/app`
 
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** Vanilla ES6+, CSS3, Lucide Icons, Google Bricolage Grotesque & Inter
-- **Backend:** Node.js, Express.js
-- **Database:** SQLite (`node:sqlite`)
+- **Frontend:** Modular Vanilla ES6+, CSS3, Lucide Icons, Google Plus Jakarta Sans & JetBrains Mono
+- **Backend:** Node.js, Express.js REST API
+- **Database:** Native SQLite (`node:sqlite`)

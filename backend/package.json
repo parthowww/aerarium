@@ -1,0 +1,17 @@
+{
+  "name": "aura-flow-backend",
+  "version": "1.0.0",
+  "description": "Minimalist Intelligent Subscription & Cashflow Runway Ledger",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node database/seed.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "keywords": ["cashflow", "finance", "subscriptions", "leak-detector", "minimalist"],
+  "author": "Parthasarathi Adhikary",
+  "license": "MIT"
+}

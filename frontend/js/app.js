@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
 
   if (window.lucide) {
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
   }
 });
 
@@ -68,14 +68,16 @@ function setupEventListeners() {
   });
 
   btnToggleAdd.addEventListener('click', () => {
-    addDrawer.classList.toggle('open');
-    if (addDrawer.classList.contains('open')) {
+    const isOpen = addDrawer.classList.toggle('open');
+    btnToggleAdd.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) {
       document.getElementById('tool-name').focus();
     }
   });
 
   btnCancelAdd.addEventListener('click', () => {
     addDrawer.classList.remove('open');
+    btnToggleAdd.setAttribute('aria-expanded', 'false');
     addToolForm.reset();
   });
 
@@ -99,6 +101,7 @@ function setupEventListeners() {
       const data = await res.json();
       if (data.success) {
         addDrawer.classList.remove('open');
+        btnToggleAdd.setAttribute('aria-expanded', 'false');
         addToolForm.reset();
         await fetchSubscriptions();
         await fetchLeaks();
@@ -183,27 +186,22 @@ function renderSubscriptions() {
     const isActive = sub.status === 'active';
     const hasLeak = sub.active_leaks_count > 0;
     const utilization = sub.usage_pct || 100;
-    const utilColor = utilization < 50 ? '#EF4444' : (utilization < 75 ? '#F59E0B' : '#10B981');
+    const utilColor = utilization < 50 ? 'var(--red)' : (utilization < 75 ? 'var(--accent)' : 'var(--green)');
 
     return `
       <tr>
         <td>
-          <div style="font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem;">
+          <div class="subscription-name">
             ${escapeHtml(sub.name)}
-            ${hasLeak ? `<span style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); color: #F59E0B; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 9999px; font-weight: 800;">LEAK FLAGGED</span>` : ''}
+            ${hasLeak ? '<span class="leak-badge">Finding</span>' : ''}
           </div>
-          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">${escapeHtml(sub.vendor)}</div>
+          <div class="subscription-vendor">${escapeHtml(sub.vendor)}</div>
         </td>
         <td>
-          <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em;">
-            ${sub.category}
-          </span>
+          <span class="category-label">${escapeHtml(String(sub.category || '').replace(/_/g, ' '))}</span>
         </td>
         <td>
-          <span style="font-family: var(--font-mono); font-weight: 700; color: white;">
-            $${sub.cost.toFixed(2)}
-          </span>
-          <span style="font-size: 0.75rem; color: var(--text-muted);">/mo</span>
+          <span class="cost-value">${Number(sub.cost).toFixed(2)}</span><span class="cost-period"> /mo</span>
         </td>
         <td>
           <div style="display: flex; align-items: center; gap: 0.6rem;">
@@ -216,17 +214,16 @@ function renderSubscriptions() {
           </div>
         </td>
         <td>
-          <span style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono);">
-            ${sub.next_billing_date}
-          </span>
+          <span class="renewal-date">${escapeHtml(sub.next_billing_date)}</span>
         </td>
-        <td style="text-align: right;">
-          <div style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <button onclick="toggleSubscriptionStatus(${sub.id})" class="${isActive ? 'pill-active' : 'pill-paused'}">
-              ${isActive ? 'Active' : 'Paused'}
+        <td>
+          <div class="row-actions">
+            <span class="status-state ${isActive ? '' : 'paused'}">${isActive ? 'Active' : 'Paused'}</span>
+            <button type="button" onclick="toggleSubscriptionStatus(${sub.id})" class="status-action" aria-label="${isActive ? 'Pause' : 'Resume'} ${escapeHtml(sub.name)} in the demo ledger" title="Changes the demo ledger only; vendor billing is unchanged">
+              ${isActive ? 'Pause' : 'Resume'}
             </button>
-            <button onclick="deleteSubscription(${sub.id})" style="background: transparent; border: none; color: #64748B; cursor: pointer; padding: 0.35rem;" title="Delete Contract">
-              <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+            <button type="button" onclick="deleteSubscription(${sub.id})" class="delete-action" aria-label="Remove ${escapeHtml(sub.name)} from the demo ledger" title="Remove from demo ledger">
+              <i data-lucide="trash-2" aria-hidden="true"></i>
             </button>
           </div>
         </td>
@@ -254,7 +251,7 @@ async function toggleSubscriptionStatus(id) {
 
 // Delete Subscription
 async function deleteSubscription(id) {
-  if (!confirm('Remove this subscription from your treasury tracking?')) return;
+  if (!confirm('Remove this subscription from the sample ledger? This does not change vendor billing.')) return;
 
   try {
     const res = await fetch(`${API_BASE}/subscriptions/${id}`, { method: 'DELETE' });
@@ -292,19 +289,13 @@ function renderLeaks() {
 
   leaksContainer.innerHTML = leaks.map(leak => `
     <div class="leak-row">
-      <div>
-        <div style="font-weight: 700; color: white; font-size: 0.95rem;">
-          ${escapeHtml(leak.subscription_name)} — <span style="color: #F59E0B; font-family: var(--font-mono);">Save $${leak.potential_savings.toFixed(2)}/mo</span>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.5;">
-          ${escapeHtml(leak.reason)}
-        </p>
+      <div class="leak-copy">
+        <div class="leak-title">${escapeHtml(leak.subscription_name)}</div>
+        <p class="leak-reason">${escapeHtml(leak.reason)}</p>
       </div>
-
-      <div>
-        <button onclick="claimSavings(${leak.id})" class="btn-reclaim">
-          Claim Savings (Downgrade)
-        </button>
+      <div class="leak-actions">
+        <span class="leak-savings">Potential: ${Number(leak.potential_savings).toFixed(2)}/mo</span>
+        <button type="button" onclick="claimSavings(${leak.id})" class="btn-reclaim" title="Mark reviewed in the demo ledger only">Mark reviewed</button>
       </div>
     </div>
   `).join('');

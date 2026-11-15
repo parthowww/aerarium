@@ -5,6 +5,8 @@
   --surface: #fff;
   --ink: #18211f;
   --muted: #69736f;
+  --text-muted: var(--muted);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --line: #e2e5df;
   --accent: #a65e28;
   --accent-strong: #85491d;
@@ -132,3 +134,12 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+.subscription-name { display: flex; align-items: center; gap: 7px; color: var(--ink); font-size: 12px; font-weight: 700; }
+.subscription-vendor { margin-top: 3px; color: var(--muted); font-size: 10px; }
+.leak-badge { padding: 3px 5px; color: var(--accent-strong); background: var(--accent-soft); border: 1px solid #ead8c8; border-radius: 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.category-label { color: var(--muted); font-size: 10px; font-weight: 600; text-transform: capitalize; }
+.cost-value { color: var(--ink); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cost-period { color: var(--muted); font-size: 10px; }
+.renewal-date { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap; }

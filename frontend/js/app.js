@@ -55,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchLeaks();
   setupEventListeners();
 
-  if (window.lucide) {
-    if (window.lucide) lucide.createIcons();
-  }
+  if (window.lucide) lucide.createIcons();
 });
 
 function setupEventListeners() {
@@ -231,7 +229,7 @@ function renderSubscriptions() {
     `;
   }).join('');
 
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 }
 
 // Toggle Subscription

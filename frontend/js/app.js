@@ -37,6 +37,7 @@ const kpiLeaksCount = document.getElementById('kpi-leaks-count');
 const leakDiagnosticSection = document.getElementById('leak-diagnostic-section');
 const leaksContainer = document.getElementById('leaks-container');
 const subscriptionsTableBody = document.getElementById('subscriptions-table-body');
+const actionFeedback = document.getElementById('action-feedback');
 
 const btnToggleAdd = document.getElementById('btn-toggle-add');
 const addDrawer = document.getElementById('add-drawer');
@@ -117,6 +118,8 @@ function setupEventListeners() {
     const summaryText = [
       `# SAMPLE AERARIUM TREASURY & RUNWAY SUMMARY`,
       `Date: ${new Date().toLocaleDateString()}`,
+      `Context: Sample data from the Aerarium demo workspace; savings are estimates only.`,
+      `Date: ${new Date().toLocaleDateString()}`,
       `Company: ${currentUser.company || 'Company'}`,
       `Auditor: ${currentUser.name || 'CFO'}`,
       ``,
@@ -126,10 +129,10 @@ function setupEventListeners() {
       `- SaaS Software Spend: $${treasury.saas_monthly_burn.toLocaleString()}/mo (${Math.round((treasury.saas_monthly_burn / treasury.gross_monthly_burn) * 100)}% of total burn)`,
       `- Current Survival Runway: ${treasury.runway_months} Months (${treasury.runway_days} Days)`,
       ``,
-      `## 2. Reclaimable Software Waste`,
-      `- Active Spend Leaks: ${treasury.active_leaks_count} flagged items`,
-      `- Immediate Reclaimable Value: $${treasury.identified_savings.toLocaleString()}/mo ($${Math.round(treasury.identified_savings * 12).toLocaleString()}/yr)`,
-      `- Projected Runway After Reclamation: +${(treasury.identified_savings / (treasury.net_monthly_burn || 1) * 30.4).toFixed(0)} Days of additional runway`,
+      `## 2. Potential savings to review`,
+      `- Findings to review: ${treasury.active_leaks_count}`,
+      `- Estimated potential savings: ${treasury.identified_savings.toLocaleString()}/mo (${Math.round(treasury.identified_savings * 12).toLocaleString()}/yr)`,
+      `- Illustrative runway effect if all estimated savings were realized: +${(treasury.identified_savings / (treasury.net_monthly_burn || 1) * 30.4).toFixed(0)} days`,
       ``,
       `Sample data from the Aerarium demo workspace. Review figures before use.`
     ].join('\n');
@@ -153,7 +156,7 @@ async function fetchTreasurySummary() {
       kpiAnnualRunrate.textContent = `$${treasury.annualized_saas_burn.toLocaleString()}/yr run-rate`;
       kpiCashBank.textContent = `$${treasury.cash_in_bank.toLocaleString()}`;
       kpiLeaksTotal.textContent = `$${treasury.identified_savings.toLocaleString('en-US', { minimumFractionDigits: 2 })}/mo`;
-      kpiLeaksCount.textContent = `${treasury.active_leaks_count} immediate savings actions`;
+      kpiLeaksCount.textContent = `${treasury.active_leaks_count} findings to review`;
     }
   } catch (err) {
     console.error('Failed to load treasury summary:', err);
@@ -305,12 +308,23 @@ async function claimSavings(leakId) {
     const res = await fetch(`${API_BASE}/leaks/${leakId}/resolve`, { method: 'PATCH' });
     const data = await res.json();
     if (data.success) {
+      if (actionFeedback) {
+        actionFeedback.textContent = 'Finding marked as reviewed in this sample ledger.';
+        actionFeedback.dataset.state = 'success';
+      }
       await fetchLeaks();
       await fetchSubscriptions();
       await fetchTreasurySummary();
+    } else if (actionFeedback) {
+      actionFeedback.textContent = 'Could not update the sample ledger. Please try again.';
+      actionFeedback.dataset.state = 'error';
     }
   } catch (err) {
-    console.error('Failed to claim savings:', err);
+    console.error('Failed to mark finding as reviewed:', err);
+    if (actionFeedback) {
+      actionFeedback.textContent = 'Could not update the sample ledger. Please try again.';
+      actionFeedback.dataset.state = 'error';
+    }
   }
 }
 

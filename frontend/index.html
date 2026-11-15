@@ -3,160 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aerarium — Sovereign Spend & Runway Treasury Ledger</title>
+  <meta name="description" content="See where recurring software spend is going and find opportunities to make more of your runway.">
+  <title>Aerarium — Clearer view of company spend</title>
   <link rel="stylesheet" href="css/landing.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-
-  <!-- Navigation -->
   <header class="landing-nav">
-    <a href="/" class="brand-badge">
-      <span class="gold-gem"></span>
+    <a href="/" class="brand-badge" aria-label="Aerarium home">
+      <span class="gold-gem" aria-hidden="true"></span>
       Aerarium
     </a>
-    <nav class="nav-links">
-      <a href="#simulator" class="nav-link-item">Runway Simulator</a>
-      <a href="#problem" class="nav-link-item">The Leak Problem</a>
-      <a href="/login" class="btn-subtle">Sign In</a>
-      <a href="/login" class="btn-gold">
-        Launch Console
-        <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
-      </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#simulator" class="nav-link-item">Explore the example</a>
+      <a href="#how-it-helps" class="nav-link-item">How it helps</a>
+      <a href="/login" class="nav-link-item">Sign in</a>
+      <a href="/login" class="btn-gold">Try the demo <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <main class="hero-container">
-    <div class="pill-tag">
-      <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
-      Sovereign Capital & Runway Protection
-    </div>
-
-    <h1 class="hero-heading">
-      Where is your startup's cash runway leaking?
-    </h1>
-
-    <p class="hero-sub">
-      Aerarium audits recurring cloud contracts, detects dormant seat licenses, and flags price creep. Reclaim up to 28% of your software burn and extend your survival runway by months.
-    </p>
-
-    <div class="hero-actions">
-      <a href="/login" class="btn-gold" style="padding: 0.85rem 2rem; font-size: 1rem;">
-        Open Working Demo
-        <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
-      </a>
-      <a href="#simulator" class="btn-subtle" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
-        Runway Simulator Below
-      </a>
-    </div>
-
-    <!-- Live Interactive Runway Simulator Component in Hero -->
-    <div id="simulator" class="calculator-sandbox">
-      <div class="calc-header">
-        <div>
-          <span style="font-weight: 700; color: white; font-size: 1.05rem;">Live Runway Extension Engine</span>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">Slide your current bank balance to see the effect of automated license reclamation.</p>
-        </div>
-        <span style="font-size: 0.75rem; color: #10B981; font-family: var(--font-mono); font-weight: 700;">AUDIT ENGINE: ONLINE</span>
+  <main>
+    <section class="hero-container">
+      <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Software spend, made easier to understand</div>
+      <h1 class="hero-heading">Make every software dollar easier to account for.</h1>
+      <p class="hero-sub">Aerarium brings recurring contracts, seat usage, and renewal dates into one clear view—so your team can spot waste and make more informed decisions.</p>
+      <div class="hero-actions">
+        <a href="/login" class="btn-gold">Explore the demo <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        <a href="#simulator" class="btn-subtle">See an example</a>
       </div>
+      <p class="trust-note">A sample workspace is ready to explore. No vendor account connection is required.</p>
 
-      <div class="calc-grid">
-        <div class="calc-box">
-          <div class="calc-label">CASH RESERVES</div>
-          <div id="calc-reserves-val" class="calc-val">$185,000</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Bank cash in hand</div>
+      <section id="simulator" class="calculator-sandbox" aria-labelledby="simulator-title">
+        <div class="calc-header">
+          <div>
+            <p class="section-kicker">Illustrative scenario · sample figures</p>
+            <h2 id="simulator-title">See the numbers at a glance</h2>
+            <p class="calc-intro">This example uses sample software spend. Adjusting cash reserves changes the balance shown; the other sample figures remain fixed.</p>
+          </div>
+          <span class="sample-badge">Example data</span>
         </div>
+        <div class="calc-grid">
+          <div class="calc-box">
+            <div class="calc-label">Cash reserves</div>
+            <div id="calc-reserves-val" class="calc-val">$185,000</div>
+            <div class="calc-caption">Illustrative balance</div>
+          </div>
+          <div class="calc-box">
+            <div class="calc-label">Monthly software spend</div>
+            <div class="calc-val">$5,155<span class="calc-unit">/mo</span></div>
+            <div class="calc-caption">Across 8 sample subscriptions</div>
+          </div>
+          <div class="calc-box">
+            <div class="calc-label">Potential savings found</div>
+            <div class="calc-val">$1,115<span class="calc-unit">/mo</span></div>
+            <div class="calc-caption">Example only; no vendor changes are made</div>
+          </div>
+        </div>
+        <div class="slider-container">
+          <label for="cash-slider"><span>Explore a different cash balance</span><output id="slider-val-label" for="cash-slider">$185,000</output></label>
+          <input type="range" id="cash-slider" class="calc-slider" min="50000" max="500000" step="5000" value="185000" aria-describedby="slider-note">
+          <p id="slider-note" class="calc-caption">Move the slider to update the sample reserve figure.</p>
+        </div>
+      </section>
+    </section>
 
-        <div class="calc-box">
-          <div class="calc-label">MONTHLY RECURRING SPEND</div>
-          <div class="calc-val" style="color: #F87171;">$5,155/mo</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">8 active enterprise tools</div>
-        </div>
-
-        <div class="calc-box">
-          <div class="calc-label">IDENTIFIED RECLAIMABLE LEAKS</div>
-          <div class="calc-val" style="color: #F59E0B;">$1,115/mo</div>
-          <div style="font-size: 0.75rem; color: #10B981; margin-top: 0.25rem;">+3.4 months runway gained</div>
-        </div>
+    <section id="how-it-helps" class="grid-section" aria-labelledby="problem-title">
+      <div class="section-heading">
+        <p class="section-kicker">A clearer view of recurring spend</p>
+        <h2 id="problem-title">Know what you pay for—and what to review.</h2>
       </div>
-
-      <div class="slider-container">
-        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-          <span style="color: var(--text-muted); font-weight: 600;">Simulate Cash Reserves:</span>
-          <span id="slider-val-label" style="color: var(--gold-accent); font-family: var(--font-mono); font-weight: 700;">$185,000</span>
-        </div>
-        <input type="range" id="cash-slider" class="calc-slider" min="50000" max="500000" step="5000" value="185000">
+      <div class="features-grid">
+        <article class="feature-box">
+          <span class="feature-index">01</span>
+          <h3 class="feature-title">Spot unused seats</h3>
+          <p class="feature-desc">Compare active seats with purchased seats to see subscriptions that may deserve a closer look.</p>
+        </article>
+        <article class="feature-box">
+          <span class="feature-index">02</span>
+          <h3 class="feature-title">Catch spend changes</h3>
+          <p class="feature-desc">Keep software costs and renewal dates in one place, making changes easier to notice and review.</p>
+        </article>
+        <article class="feature-box">
+          <span class="feature-index">03</span>
+          <h3 class="feature-title">Bring context to decisions</h3>
+          <p class="feature-desc">See potential savings alongside your wider cash picture before deciding what to do next.</p>
+        </article>
       </div>
-    </div>
+    </section>
+
+    <section class="closing-cta">
+      <div>
+        <p class="section-kicker">Start with the sample workspace</p>
+        <h2>Get a clearer picture of recurring spend.</h2>
+        <p>Explore the console with sample subscriptions, findings, and treasury figures.</p>
+      </div>
+      <a href="/login" class="btn-gold">Open the demo <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+    </section>
   </main>
 
-  <!-- Problem & Solution Section -->
-  <section id="problem" class="grid-section">
-    <div style="text-align: center; font-size: 0.85rem; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">
-      THE REAL PROBLEM
-    </div>
-    <h2 style="text-align: center; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 3.5rem;">
-      Why Startups Silently Bleed Runway
-    </h2>
-
-    <div class="features-grid">
-      <div class="feature-box">
-        <div class="feature-icon-wrapper">
-          <i data-lucide="user-x"></i>
-        </div>
-        <h3 class="feature-title">Zombie Seats</h3>
-        <p class="feature-desc">
-          Engineers and designers leave or switch projects, but their $45/mo Figma, GitHub, and Notion seats keep auto-billing forever.
-        </p>
-      </div>
-
-      <div class="feature-box">
-        <div class="feature-icon-wrapper">
-          <i data-lucide="trending-up"></i>
-        </div>
-        <h3 class="feature-title">Silent Price Creep</h3>
-        <p class="feature-desc">
-          Cloud vendors increase tiers automatically after introductory periods. Datadog or AWS bills jump 35% without an alert until the credit card statement closes.
-        </p>
-      </div>
-
-      <div class="feature-box">
-        <div class="feature-icon-wrapper">
-          <i data-lucide="clock"></i>
-        </div>
-        <h3 class="feature-title">Every Dollar Is Runway</h3>
-        <p class="feature-desc">
-          $1,500/mo in eliminated software waste equals $18,000/yr. In a seed-stage company, that is an extra month of engineering payroll before fundraising.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Box -->
-  <section style="background: linear-gradient(180deg, rgba(18, 24, 38, 0.9) 0%, rgba(9, 13, 22, 0.9) 100%); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 28px; padding: 4rem 2rem; text-align: center; max-width: 900px; margin: 4rem auto 6rem auto;">
-    <h2 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem;">Take Control of Your Sovereign Runway</h2>
-    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem auto;">
-      Test the working Aerarium console with real-time runway mathematics, leak resolution, and audit exports.
-    </p>
-    <a href="/login" class="btn-gold" style="padding: 0.9rem 2.25rem; font-size: 1rem;">
-      Sign In & Launch Demo
-      <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-    </a>
-  </section>
+  <footer class="site-footer">
+    <a href="/" class="brand-badge"><span class="gold-gem" aria-hidden="true"></span>Aerarium</a>
+    <span>Sample data for product exploration. Aerarium does not connect to vendors in this demo.</span>
+  </footer>
 
   <script>
-    lucide.createIcons();
-
-    // Slider simulation
+    if (window.lucide) lucide.createIcons();
     const slider = document.getElementById('cash-slider');
     const label = document.getElementById('slider-val-label');
     const reservesVal = document.getElementById('calc-reserves-val');
-
-    slider.addEventListener('input', (e) => {
-      const val = parseInt(e.target.value);
-      label.textContent = `$${val.toLocaleString()}`;
-      reservesVal.textContent = `$${val.toLocaleString()}`;
+    const formatCurrency = (value) => '$' + Number(value).toLocaleString('en-US');
+    slider.addEventListener('input', (event) => {
+      const formatted = formatCurrency(event.target.value);
+      label.value = formatted;
+      label.textContent = formatted;
+      reservesVal.textContent = formatted;
     });
   </script>
 </body>

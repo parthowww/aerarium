@@ -143,3 +143,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .cost-period { color: var(--muted); font-size: 10px; }
 .renewal-date { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap; }
+
+.action-feedback { margin: 14px 0 0; padding: 9px 11px; border: 1px solid var(--line); border-radius: 5px; font-size: 12px; line-height: 1.45; }
+.action-feedback:empty { display: none; }
+.action-feedback[data-state="success"] { color: var(--green); background: var(--green-soft); border-color: #d9e5da; }
+.action-feedback[data-state="error"] { color: var(--red); background: #f8efed; border-color: #ead2cd; }

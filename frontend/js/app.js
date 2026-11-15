@@ -130,7 +130,7 @@ function setupEventListeners() {
       ``,
       `## 2. Potential savings to review`,
       `- Findings to review: ${treasury.active_leaks_count}`,
-      `- Estimated potential savings: ${treasury.identified_savings.toLocaleString()}/mo (${Math.round(treasury.identified_savings * 12).toLocaleString()}/yr)`,
+      `- Estimated potential savings: $${treasury.identified_savings.toLocaleString()}/mo (${Math.round(treasury.identified_savings * 12).toLocaleString()}/yr)`,
       `- Illustrative runway effect if all estimated savings were realized: +${(treasury.identified_savings / (treasury.net_monthly_burn || 1) * 30.4).toFixed(0)} days`,
       ``,
       `Sample data from the Aerarium demo workspace. Review figures before use.`

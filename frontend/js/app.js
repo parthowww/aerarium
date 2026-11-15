@@ -201,7 +201,7 @@ function renderSubscriptions() {
           <span class="category-label">${escapeHtml(String(sub.category || '').replace(/_/g, ' '))}</span>
         </td>
         <td>
-          <span class="cost-value">${Number(sub.cost).toFixed(2)}</span><span class="cost-period"> /mo</span>
+          <span class="cost-value">$${Number(sub.cost).toFixed(2)}</span><span class="cost-period"> /mo</span>
         </td>
         <td>
           <div style="display: flex; align-items: center; gap: 0.6rem;">
@@ -294,7 +294,7 @@ function renderLeaks() {
         <p class="leak-reason">${escapeHtml(leak.reason)}</p>
       </div>
       <div class="leak-actions">
-        <span class="leak-savings">Potential: ${Number(leak.potential_savings).toFixed(2)}/mo</span>
+        <span class="leak-savings">Potential: $${Number(leak.potential_savings).toFixed(2)}/mo</span>
         <button type="button" onclick="claimSavings(${leak.id})" class="btn-reclaim" title="Mark reviewed in the demo ledger only">Mark reviewed</button>
       </div>
     </div>

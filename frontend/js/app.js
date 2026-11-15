@@ -117,7 +117,6 @@ function setupEventListeners() {
 
     const summaryText = [
       `# SAMPLE AERARIUM TREASURY & RUNWAY SUMMARY`,
-      `Date: ${new Date().toLocaleDateString()}`,
       `Context: Sample data from the Aerarium demo workspace; savings are estimates only.`,
       `Date: ${new Date().toLocaleDateString()}`,
       `Company: ${currentUser.company || 'Company'}`,
